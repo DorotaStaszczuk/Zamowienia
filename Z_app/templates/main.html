@@ -1,0 +1,20 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="content">
+    <h2>Lista produktów:</h2><br />
+<section>
+    <div id="products">
+      {% for product in  products %}
+          <p> {{ forloop.counter }}. Produkt: <a id="product" href="{% url 'product' pk=product.pk %}">{{ product.name }}</a></p>
+      {% empty %}
+        <h2>Brak produktów</h2>
+      {% endfor %}
+    </div>
+</section>
+<section>
+  <h2>Wyszukiwarka produktów:</h2>
+</section>
+</div>
+{% endblock %}
