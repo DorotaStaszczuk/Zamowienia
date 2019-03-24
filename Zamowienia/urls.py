@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from Z_app.views import MainSiteView, ProductView
+from Z_app.views import MainSiteView, ProductView, AddProductView, EditProductView, \
+DeleteProductView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^main/', MainSiteView.as_view(), name='main'),
     url(r'^product/(?P<pk>(\d)+)/$', ProductView.as_view(), name="product"),
+    url(r'^add_product$', AddProductView.as_view(), name="add-product"),
+    url(r'^edit_product/(?P<pk>\d+)/$', EditProductView.as_view(), name="edit-product"),
+    url(r'^delete_product/(?P<pk>(\d)+)/$', DeleteProductView.as_view(), name="delete-product"),
+
 ]
