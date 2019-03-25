@@ -57,3 +57,44 @@ class DeleteProductView(LoginRequiredMixin, DeleteView):
 
     model = Product
     success_url = reverse_lazy("main")
+
+
+class LoginView(View):
+    def get(self, request):
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['login']
+            password = form.cleaned_data['password']
+            user = authenticate(request=request, username=username, password=password)
+            if user is None:
+                form.add_error('login', 'Login lub hasło jest niepoprawne')
+                return render(request, "login.html",
+                              {'form': form})
+            login(request, user)
+            return redirect('main')
+
+
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            logout(request)
+            return redirect(reverse('login'))
+
+
+def signup(request):
+    if request.method == 'GET':
+        form = MyUserCreationForm()
+        return render(request, 'signup.html', {'form': form})
+    if request.method == 'POST':
+        form = MyUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('main')
+    else:
+        form = MyUserCreationForm()
+    return render(request, 'form.html', {'form': form})
