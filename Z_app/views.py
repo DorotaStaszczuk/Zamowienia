@@ -2,10 +2,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic.detail import DetailView
-from .models import Product
+from .models import Product, User
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy, reverse
+from .forms import MyUserCreationForm, LoginForm
+
 
 class MainSiteView(ListView):
     model = Product
@@ -15,10 +18,12 @@ class MainSiteView(ListView):
         ctx = {'products': Product.objects.all()}
         return render(request, 'main.html', ctx)
 
+
 class ProductView(DetailView):
     model = Product
 
-class AddProductView(CreateView):
+
+class AddProductView(LoginRequiredMixin, CreateView):
     model = Product
     fields = '__all__'
 
@@ -30,3 +35,25 @@ class AddProductView(CreateView):
         self.object.user = self.request.user
         self.object.save()
         return redirect(self.get_success_url())
+
+
+class EditProductView(LoginRequiredMixin, UpdateView):
+    def test_func(self):
+        self.object = self.get_object()
+        return self.request.user == self.object.user
+
+    model = Product
+    fields = '__all__'
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse('product', args=[self.object.pk])
+
+
+class DeleteProductView(LoginRequiredMixin, DeleteView):
+    def test_func(self):
+        self.object = self.get_object()
+        return self.request.user == self.object.user
+
+    model = Product
+    success_url = reverse_lazy("main")
