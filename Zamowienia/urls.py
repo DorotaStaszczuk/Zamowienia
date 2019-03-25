@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from Z_app.views import MainSiteView, ProductView, AddProductView, EditProductView, \
-DeleteProductView, LoginView, LogoutView, signup
+DeleteProductView, LoginView, LogoutView, signup, UserView, EditUserView, DeleteUserView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -28,5 +28,8 @@ urlpatterns = [
     url(r'^login$', LoginView.as_view(), name="login"),
     url(r'^logout$', LogoutView.as_view(), name="logout"),
     url(r'^signup$', signup, name="signup"),
+    url(r'^user/(?P<pk>\d+)/$', UserView.as_view(), name="user"),
+    url(r'^edit_user/(?P<pk>\d+)/$', EditUserView.as_view(), name="edit-user"),
+    url(r'^delete_user/(?P<pk>(\d)+)/$', DeleteUserView.as_view(), name="delete-user"),
 
 ]
