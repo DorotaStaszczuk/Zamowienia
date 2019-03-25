@@ -86,9 +86,6 @@ class LogoutView(LoginRequiredMixin, View):
 
 
 def signup(request):
-    if request.method == 'GET':
-        form = MyUserCreationForm()
-        return render(request, 'signup.html', {'form': form})
     if request.method == 'POST':
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
@@ -97,4 +94,19 @@ def signup(request):
             return redirect('main')
     else:
         form = MyUserCreationForm()
-    return render(request, 'form.html', {'form': form})
+    return render(request, 'signup.html', {'form': form})
+
+class UserView(LoginRequiredMixin, DetailView):
+    model = User
+
+class EditUserView(LoginRequiredMixin, UpdateView):
+    model = User
+    fields = ('username', 'email', 'profile_image')
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse('user', args=[self.object.pk])
+
+class DeleteUserView(LoginRequiredMixin, DeleteView):
+    model = User
+    success_url = reverse_lazy("main")
