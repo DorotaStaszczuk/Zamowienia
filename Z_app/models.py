@@ -1,11 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 
 USER_TYPE_CHOICES = (
     (0, 'Sprzedawca'),
     (1, 'Klient'),
     )
+
+class User(AbstractUser):
+    profile_image = models.ImageField(null=True, blank=True, verbose_name="Zdjęcie profilowe")
+    registration_date = models.DateTimeField(auto_now_add=True, verbose_name="Data rejestracji")
+    type = models.IntegerField(null=True, choices=USER_TYPE_CHOICES, verbose_name="Typ użytkownika")
 
 class Product(models.Model):
     name = models.CharField(max_length=64, verbose_name="Nazwa")
@@ -23,7 +28,7 @@ class Order(models.Model):
     products = models.ManyToManyField(Product)
 
 class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, choices=USER_TYPE_CHOICES, verbose_name="Użytkownik")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Użytkownik")
     company_name = models.CharField(max_length=90, blank=True, verbose_name="Nazwa firmy")
     name = models.CharField(max_length=64, verbose_name="Imię")
     surname= models.CharField(max_length=64, verbose_name="Nazwisko")
