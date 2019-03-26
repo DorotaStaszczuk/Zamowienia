@@ -15,7 +15,6 @@
   <p>Opis: {{ object.description }}</p>
 
   {% if request.user.is_authenticated %}
-  <a href="{% url 'add-product' %}"><input type="button" value="Dodaj nowy produkt" /></a>
   <a href="{% url 'edit-product' pk=object.pk %}"><input type="button" value="Edytuj" /></a>
   <a href="{% url 'delete-product' pk=object.pk %}"><input type="button" value="Usuń" /></a>
   {% endif %}
