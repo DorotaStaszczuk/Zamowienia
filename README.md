@@ -11,6 +11,8 @@ Work in progress
 
 ## Technologies
 Project is created with:
-* Python
+* Python 3.6
 * Django 1.11
 * SQLite
+* HTML
+* CSS
