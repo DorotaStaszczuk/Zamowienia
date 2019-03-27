@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 from Z_app.views import MainSiteView, ProductView, AddProductView, EditProductView, \
 DeleteProductView, LoginView, LogoutView, signup, UserView, EditUserView, DeleteUserView
 
@@ -32,4 +34,4 @@ urlpatterns = [
     url(r'^edit_user/(?P<pk>\d+)/$', EditUserView.as_view(), name="edit-user"),
     url(r'^delete_user/(?P<pk>(\d)+)/$', DeleteUserView.as_view(), name="delete-user"),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
