@@ -8,15 +8,25 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from .forms import MyUserCreationForm, LoginForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class MainSiteView(ListView):
     model = Product
-    paginate_by = 50
 
     def get(self, request):
-        ctx = {'products': Product.objects.all()}
-        return render(request, 'main.html', ctx)
+        product_list = Product.objects.all()
+        paginator = Paginator(product_list, 5)
+
+        page = request.GET.get('page')
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+
+        return render(request, 'main.html', {'products': products})
 
 
 class ProductView(DetailView):
@@ -96,8 +106,10 @@ def signup(request):
         form = MyUserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
+
 class UserView(LoginRequiredMixin, DetailView):
     model = User
+
 
 class EditUserView(LoginRequiredMixin, UpdateView):
     model = User
@@ -106,6 +118,7 @@ class EditUserView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('user', args=[self.object.pk])
+
 
 class DeleteUserView(LoginRequiredMixin, DeleteView):
     model = User
