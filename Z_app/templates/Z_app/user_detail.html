@@ -1,21 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div>
-    {% if not object.profile_image %}
-        <p> {{ object.username }}</p>
-        <p>Brak zdjęcia profilowego</p>
-    {% else %}
-        <p><img id="profile" src="{{ object.profile_image.url }}"> {{ object.username }}</p>
-    {% endif %}
+    <div id="center">
+        <h2 class="title">Strona użytkownika</h2><br />
+        <div>
+            {% if not object.profile_image %}
+                <p> Nazwa użytkownika: {{ object.username }}</p>
+                <p>Zdjęcie profilowe: Brak zdjęcia </p>
+            {% else %}
+                <p>Zdjęcie profilowe: <img id="profile" src="{{ object.profile_image.url }}">
+                    Nazwa użytkownika: {{ object.username }}</p>
+            {% endif %}
 
-    Typ użytkownika: {{ object.type }} {{ object.get_user_type_display }} <br />
-    Data utworzenia konta: {{ object.registration_date }}<br />
+            {% if object.type == 0 %}
+                <p>Typ użytkownika: Sprzedawca</p>
+            {% else %}
+                <p>Typ użytkownika: Klient</p>
+            {% endif %}
 
-    <p>
-      <a href="{% url 'edit-user' pk=object.pk %}"><input type="button" value="Edytuj profil" /></a>
-      <a href="{% url 'delete-user' pk=object.pk %}"><input type="button" value="Usuń konto" /></a>
-    <p/>
+            <p>Data utworzenia konta: {{ object.registration_date }}</p>
 
-  </div>
+            <p>
+                <a href="{% url 'edit-user' pk=object.pk %}"><input type="button" value="Edytuj profil" /></a>
+                <a href="{% url 'delete-user' pk=object.pk %}"><input type="button" value="Usuń konto" /></a>
+            <p/>
+
+        </div>
+    </div>
 {% endblock %}
