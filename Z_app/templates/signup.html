@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div id="content">
-    <h2>Rejestracja</h2>
-    <form action="{% url 'signup' %}" method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <input type="submit" value="Załóż konto">
-    </form>
-  </div>
+<div id="center">
+    <div id="content">
+        <h2>Rejestracja</h2><br />
+        <form action="{% url 'signup' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <input type="submit" value="Załóż konto">
+        </form>
+    </div>
+</div>
 {% endblock %}
