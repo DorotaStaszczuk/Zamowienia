@@ -26,7 +26,8 @@ p {
 }
 
 a {
-	color: #706C53;
+	color: #8e0000;
+	text-decoration: none;
 }
 
 a:hover {
@@ -34,7 +35,7 @@ a:hover {
 }
 
 img {
-    height: 50px;
+    height: 80px;
 }
 
 a img {
@@ -231,7 +232,7 @@ ul.style1 .first
 #box2
 {
 	float: left;
-	width: 300px;
+	width: 400px;
 }
 
 #box2 h2, #box3 h2
@@ -252,7 +253,7 @@ ul.style1 .first
 #center
 {
 	margin: auto;
-  text-align: center;
+  	text-align: center;
 	width: 500px;
 }
 
