@@ -1,20 +1,61 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
-<div id="content">
-    <h2>Lista produktów:</h2><br />
-<section>
-    <div id="products">
-      {% for product in  products %}
-          <p> {{ forloop.counter }}. Produkt: <a id="product" href="{% url 'product' pk=product.pk %}">{{ product.name }}</a></p>
-      {% empty %}
-        <h2>Brak produktów</h2>
-      {% endfor %}
+
+    <div id="box2">
+        <h2 class="title">Lista produktów:</h2>
+            <div id="products">
+                {% for product in products %}
+                    <p>
+                    {% if not product.image %}
+                        <img src="/static/css/images/a.png">
+                        <a id="product" href="{% url 'product' pk=product.pk %}">{{ product.name }}</a>
+                    {% else %}
+                        <img src="{{ product.image.url }}">
+                        <a id="product" href="{% url 'product' pk=product.pk %}">{{ product.name }}</a>
+                    {% endif %}</p>
+                {% empty %}
+                    <h2>Brak produktów</h2>
+                {% endfor %}
+
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if products.has_previous %}
+                            <a href="?page={{ products.previous_page_number }}"> << </a>
+                        {% endif %}
+
+                        <span class="current">
+                            strona {{ products.number }} z {{ products.paginator.num_pages }}
+                        </span>
+
+                        {% if products.has_next %}
+                            <a href="?page={{ products.next_page_number }}"> >> </a>
+                        {% endif %}
+                    </span>
+                </div>
+
+            </div><br />
+            {% if request.user.is_authenticated and request.user.type == 0%}
+                <a href="{% url 'add-product' %}"><input type="button" value="Dodaj nowy produkt" /></a>
+            {% endif %}
     </div>
-</section>
-<section>
-  <h2>Wyszukiwarka produktów:</h2>
-</section>
-</div>
+    <div id="box2">
+        <h2 class="title">Wyszukiwarka produktów:</h2>
+        <div>
+            <form type="get" action="." style="margin: 0">
+                <input  id="search_box" type="text" name="search_box"  placeholder="Wyszukaj produkt..." >
+                <button id="search_submit" type="submit" >Szukaj</button>
+            </form>
+            <form method="GET" action="" id="searchform">
+                <input class="searchfield" id="searchbox" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search..."/>
+                <button id="search_submit" type="submit" >Szukaj</button>
+            </form>
+        </div>
+    </div>
+    <div id="box3">
+        {% if request.user.is_authenticated and request.user.type == 1%}
+            <h2 class="title">Koszyk:</h2>
+        {% endif %}
+    </div>
+
 {% endblock %}
