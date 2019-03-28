@@ -33,6 +33,10 @@ a:hover {
 	text-decoration: none;
 }
 
+img {
+    height: 50px;
+}
+
 a img {
 	border: none;
 }
@@ -109,6 +113,11 @@ ul.style1 .first
 	padding: 3em 0em;
 }
 
+#logo-wrapper {
+	overflow: hidden;
+	margin-bottom: 2em;
+}
+
 #logo h1, #logo p {
 	text-align: center;
 }
@@ -160,6 +169,10 @@ ul.style1 .first
 	padding: 0px 0px 0px 0px;
 	list-style: none;
 	line-height: normal;
+	text-align: center;
+}
+
+#menu1 ul {
 	text-align: right;
 }
 
@@ -188,7 +201,6 @@ ul.style1 .first
 }
 
 /** PAGE */
-
 
 #page {
 	overflow: hidden;
@@ -235,6 +247,13 @@ ul.style1 .first
 {
 	float: right;
 	width: 250px;
+}
+
+#center
+{
+	margin: auto;
+  text-align: center;
+	width: 500px;
 }
 
 /* Footer */
