@@ -1,21 +1,48 @@
 {% load static %}
+
 <!doctype html>
 <html>
     <head>
         <meta charset = "utf-8">
         <link rel="stylesheet" href="{% static "CSS/style.css" %}">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Archivo+Narrow:400,700" rel="stylesheet" type="text/css">
         <title>
-        {% block title %}
-        {% endblock %}
+            {% block title %}
+            {% endblock %}
         </title>
     </head>
     <body>
-        <h1>Zamówienia</h1>
+        <div id="menu-wrapper">
+            <div id="menu1">
+            	<div id="menu" class="container">
+            		<ul>
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'user' pk=request.user.pk %}">{{ request.user }}</a></li>
+                            <li><a href="{% url 'logout' %}">Wyloguj się</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Zaloguj się</a></li>
+                            <li><a href="{% url 'signup' %}">Załóż konto</a></li>
+                        {% endif %}
+            		</ul>
+            	</div>
+            </div>
+        </div>
+        <div id="logo-wrapper">
+            <div id="logo" class="container">
+                <h1><a href="{% url 'main' %}">Zamówienia</a></h1>
+            </div>
+        </div>
+        <div id="menu-wrapper">
+        </div>
+        <div id="page" class="container">
+            {% block content %}
+            {% endblock %}
 
-        {% block content %}
-        {% endblock %}
-
-        {% block footer %}
-        {% endblock %}
+            {% block footer %}
+            {% endblock %}
+        </div>
+        <div id="footer" class="container">
+        	<p>&copy; 2019 by DS. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>. </p>
+        </div>
     </body>
 </html>
