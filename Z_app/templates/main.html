@@ -41,16 +41,7 @@
     </div>
     <div id="box2">
         <h2 class="title">Wyszukiwarka produktów:</h2>
-        <div>
-            <form type="get" action="." style="margin: 0">
-                <input  id="search_box" type="text" name="search_box"  placeholder="Wyszukaj produkt..." >
-                <button id="search_submit" type="submit" >Szukaj</button>
-            </form>
-            <form method="GET" action="" id="searchform">
-                <input class="searchfield" id="searchbox" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search..."/>
-                <button id="search_submit" type="submit" >Szukaj</button>
-            </form>
-        </div>
+        
     </div>
     <div id="box3">
         {% if request.user.is_authenticated and request.user.type == 1%}
