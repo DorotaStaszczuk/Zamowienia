@@ -40,8 +40,13 @@
             {% endif %}
     </div>
     <div id="box2">
-        <h2 class="title">Wyszukiwarka produktów:</h2>
-        
+        <h2 class="title">Wyszukiwarka produktów:</h2> 
+        <div>
+            <form method="GET" action="" id="searchform">
+                <input class="searchfield" id="searchbox" name="q" type="text" value="{{ request.GET.q }}" placeholder="Wyszukaj produkt..."/>
+                <button id="search_submit" type="submit" >Szukaj</button>
+            </form><br />
+        </div>
     </div>
     <div id="box3">
         {% if request.user.is_authenticated and request.user.type == 1%}
