@@ -28,6 +28,15 @@ class MainSiteView(ListView):
 
         return render(request, 'main.html', {'products': products})
 
+        # not working yet
+        # def get_queryset(self):
+        #     if request.method == 'GET':
+        #         query = self.request.GET.get('q')
+        #         if query:
+        #             return Product.objects.filter(name__icontains=query)
+        #         else:
+        #             return Product.objects.all()
+
 
 class ProductView(DetailView):
     model = Product
