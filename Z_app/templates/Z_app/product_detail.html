@@ -5,17 +5,17 @@
         <h2 class="title">Szczegóły produku</h2><br />
         <div>
             {% if not object.image %}
-                <p>Brak zdjęcia</p>
+                <p><img src="/static/css/images/a.png"></p>
             {% else %}
                 <p><img src="{{ object.image.url }}"></p>
             {% endif %}
 
             <p>Nazwa: {{ object.name }}</p>
             <p>Producent: {{ object.manufacturer }}</p>
-            <p>Cena: {{ object.price }}</p>
+            <p>Cena: {{ object.price }} zł</p>
             <p>Opis: {{ object.description }}</p>
 
-            {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated and request.user.type == 0%}
                 <a href="{% url 'edit-product' pk=object.pk %}"><input type="button" value="Edytuj" /></a>
                 <a href="{% url 'delete-product' pk=object.pk %}"><input type="button" value="Usuń" /></a>
             {% endif %}
